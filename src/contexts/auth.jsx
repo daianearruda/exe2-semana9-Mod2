@@ -12,8 +12,9 @@ export function AuthProvider({ children }) {
     function signIn() {
         setUser({
             id: Date.now(),
-            username: 'string',
-            password: 'string'
+            username: '',
+            email: '',
+            age:''
         })
     }
 
@@ -28,3 +29,25 @@ export function useAuth() {
     const contexto = useContext(AuthContext)
     return contexto
 }
+
+
+export function fakeApiSignIn({ username, password }) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (username === 'user' && password === 'password') {
+          resolve({
+            userId: '12345',
+            username: 'user',
+            email: 'user@example.com',
+            fisrtName: 'User Name',
+            lastName: 'User Name',
+            gender:'',
+            image:'',
+            token: 'fake-jwt-token',
+          });
+        } else {
+          reject('Credenciais inválidas');
+        }
+      }, 1000);
+    });
+  }

@@ -1,41 +1,28 @@
+// auth.js
 import { createContext, useContext, useState } from "react";
 
 export const AuthContext = createContext({
     user: null,
     signIn: () => { },
-    signOut: () => { }
-})
+    signOut: () => { },
+    fakeApiSignUp: () => { }  // Certifique-se de incluir isso no contexto
+});
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null);
 
-    function signIn() {
-        setUser({
-            id: Date.now(),
-            username: '',
-            email: '',
-            age:''
-        })
+    function signIn(userData) {
+        setUser(userData);
     }
 
     function signOut() {
-        setUser(null)
+        setUser(null);
     }
 
-    return <AuthContext.Provider value={{user, signOut, signIn }}>{children}</AuthContext.Provider>
-}
-
-export function useAuth() {
-    const contexto = useContext(AuthContext)
-    return contexto
-}
-
-
-// Atualize a função fakeApiSignUp para refletir os parâmetros do formulário
-export function fakeApiSignUp({ username, email, firstName, lastName, gender, image, password }) {
+   // auth.js
+function fakeApiSignUp({ username, email, firstName, lastName, gender, image, password }) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      // Simule uma validação básica
       if (username && email && firstName && lastName && gender && image && password) {
         resolve({
           userId: '12345',
@@ -53,3 +40,15 @@ export function fakeApiSignUp({ username, email, firstName, lastName, gender, im
   });
 }
 
+
+    return (
+        <AuthContext.Provider value={{ user, signOut, signIn, fakeApiSignUp }}>
+            {children}
+        </AuthContext.Provider>
+    );
+}
+
+export function useAuth() {
+    const contexto = useContext(AuthContext);
+    return contexto;
+}

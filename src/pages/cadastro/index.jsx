@@ -1,22 +1,32 @@
-import { useAuth } from '../../contexts/auth';
-import { fakeApiSignUp } from '../../contexts/auth'; 
+// CadastroPage.js
+import { useAuth } from '../../contexts/auth'; // Ajuste o caminho conforme necessário
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 
 export function CadastroPage() {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { signIn } = useAuth();
+    const { signIn, fakeApiSignUp } = useAuth();
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
-            const user = await fakeApiSignUp(data);
+            // Garantindo que todos os dados necessários sejam passados
+            const user = await fakeApiSignUp({
+                username: data.firstName, // Ajuste conforme necessário
+                email: data.email,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                gender: data.gender,
+                image: data.image,
+                password: data.password
+            });
             signIn({
                 id: user.userId,
-                username: user.username,
+                username: `${data.firstName} ${data.lastName}`,
                 email: user.email,
-                age: '',
+                age: '', // Ajuste conforme necessário
+                ...user // Adicione outros detalhes se necessário
             });
             navigate('/home');
         } catch (error) {
@@ -30,7 +40,7 @@ export function CadastroPage() {
                 <h1 className="h3 pt-2 my-4 fw-normal">Preencha todos os campos para efetuar o cadastro.</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className='d-flex flex-column align-items-center'>
                     <div className="mb-2 w-50">
-                        <label htmlFor="username" className="form-label">Nome</label>
+                        <label htmlFor="firstName" className="form-label">Nome</label>
                         <input
                             type="text"
                             className="form-control"
@@ -38,11 +48,11 @@ export function CadastroPage() {
                             placeholder="Nome"
                             {...register('firstName', { required: 'Nome é obrigatório' })}
                         />
-                        {errors.username && <p className="text-danger">{errors.username.message}</p>}
+                        {errors.firstName && <p className="text-danger">{errors.firstName.message}</p>}
                     </div>
 
                     <div className="mb-2 w-50">
-                        <label htmlFor="email" className="form-label">Sobrenome</label>
+                        <label htmlFor="lastName" className="form-label">Sobrenome</label>
                         <input
                             type="text"
                             className="form-control"
@@ -50,11 +60,11 @@ export function CadastroPage() {
                             placeholder="Sobrenome"
                             {...register('lastName', { required: 'Sobrenome é obrigatório' })}
                         />
-                        {errors.email && <p className="text-danger">{errors.email.message}</p>}
+                        {errors.lastName && <p className="text-danger">{errors.lastName.message}</p>}
                     </div>
 
                     <div className="mb-2 w-50">
-                        <label htmlFor="firstName" className="form-label">Email</label>
+                        <label htmlFor="email" className="form-label">Email</label>
                         <input
                             type="text"
                             className="form-control"
@@ -62,7 +72,7 @@ export function CadastroPage() {
                             placeholder="email"
                             {...register('email', { required: 'Email é obrigatório' })}
                         />
-                        {errors.firstName && <p className="text-danger">{errors.firstName.message}</p>}
+                        {errors.email && <p className="text-danger">{errors.email.message}</p>}
                     </div>
 
                     <div className="mb-2 w-50">

@@ -12,8 +12,9 @@ export function AuthProvider({ children }) {
     function signIn() {
         setUser({
             id: Date.now(),
-            username: 'string',
-            password: 'string'
+            username: '',
+            email: '',
+            age:''
         })
     }
 
@@ -28,3 +29,28 @@ export function useAuth() {
     const contexto = useContext(AuthContext)
     return contexto
 }
+
+
+// Atualize a função fakeApiSignUp para refletir os parâmetros do formulário
+export function fakeApiSignUp({ username, email, firstName, lastName, gender, image, password }) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // Simule uma validação básica
+      if (username && email && firstName && lastName && gender && image && password) {
+        resolve({
+          userId: '12345',
+          username,
+          email,
+          firstName,
+          lastName,
+          gender,
+          image,
+          token: 'fake-jwt-token',
+        });
+      } else {
+        reject('Todos os campos são obrigatórios');
+      }
+    }, 1000);
+  });
+}
+

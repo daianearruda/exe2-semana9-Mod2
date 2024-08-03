@@ -31,23 +31,26 @@ export function useAuth() {
 }
 
 
-export function fakeApiSignIn({ username, password }) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (username === 'user' && password === 'password') {
-          resolve({
-            userId: '12345',
-            username: 'user',
-            email: 'user@example.com',
-            fisrtName: 'User Name',
-            lastName: 'User Name',
-            gender:'',
-            image:'',
-            token: 'fake-jwt-token',
-          });
-        } else {
-          reject('Credenciais inválidas');
-        }
-      }, 1000);
-    });
-  }
+// Atualize a função fakeApiSignUp para refletir os parâmetros do formulário
+export function fakeApiSignUp({ username, email, firstName, lastName, gender, image, password }) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // Simule uma validação básica
+      if (username && email && firstName && lastName && gender && image && password) {
+        resolve({
+          userId: '12345',
+          username,
+          email,
+          firstName,
+          lastName,
+          gender,
+          image,
+          token: 'fake-jwt-token',
+        });
+      } else {
+        reject('Todos os campos são obrigatórios');
+      }
+    }, 1000);
+  });
+}
+

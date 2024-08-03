@@ -34,39 +34,15 @@ export function CadastroPage() {
                         <input
                             type="text"
                             className="form-control"
-                            id="username"
+                            id="firstName"
                             placeholder="Nome"
-                            {...register('username', { required: 'Nome é obrigatório' })}
+                            {...register('firstName', { required: 'Nome é obrigatório' })}
                         />
                         {errors.username && <p className="text-danger">{errors.username.message}</p>}
                     </div>
 
                     <div className="mb-2 w-50">
-                        <label htmlFor="email" className="form-label">Email</label>
-                        <input
-                            type="email"
-                            className="form-control"
-                            id="email"
-                            placeholder="Email"
-                            {...register('email', { required: 'Email é obrigatório' })}
-                        />
-                        {errors.email && <p className="text-danger">{errors.email.message}</p>}
-                    </div>
-
-                    <div className="mb-2 w-50">
-                        <label htmlFor="firstName" className="form-label">Nome</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="firstName"
-                            placeholder="Nome"
-                            {...register('firstName', { required: 'Primeiro nome é obrigatório' })}
-                        />
-                        {errors.firstName && <p className="text-danger">{errors.firstName.message}</p>}
-                    </div>
-
-                    <div className="mb-2 w-50">
-                        <label htmlFor="lastName" className="form-label">Sobrenome</label>
+                        <label htmlFor="email" className="form-label">Sobrenome</label>
                         <input
                             type="text"
                             className="form-control"
@@ -74,7 +50,19 @@ export function CadastroPage() {
                             placeholder="Sobrenome"
                             {...register('lastName', { required: 'Sobrenome é obrigatório' })}
                         />
-                        {errors.lastName && <p className="text-danger">{errors.lastName.message}</p>}
+                        {errors.email && <p className="text-danger">{errors.email.message}</p>}
+                    </div>
+
+                    <div className="mb-2 w-50">
+                        <label htmlFor="firstName" className="form-label">Email</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="email"
+                            placeholder="email"
+                            {...register('email', { required: 'Email é obrigatório' })}
+                        />
+                        {errors.firstName && <p className="text-danger">{errors.firstName.message}</p>}
                     </div>
 
                     <div className="mb-2 w-50">

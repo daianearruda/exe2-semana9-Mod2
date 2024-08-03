@@ -39,10 +39,9 @@ export function fakeApiSignUp({ username, email, firstName, lastName, gender, im
       if (username && email && firstName && lastName && gender && image && password) {
         resolve({
           userId: '12345',
-          username,
-          email,
           firstName,
           lastName,
+          email,
           gender,
           image,
           token: 'fake-jwt-token',
